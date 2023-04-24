@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sports Player Search Engine</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body class="results_page">
+    <table> 
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Nationality</th>
+          <th>Overall</th>
+          <th>Potential</th>
+          <th>Club Name</th>
+          <th>Position</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for record in records %}
+        <tr>
+          <td style="font-weight: bold;">{{ record[1] }}</td>
+          <td>{{ record[2] }}</td>
+          <td>{{ record[3] }}</td>
+          <td>{{ record[4] }}</td>
+          <td>{{ record[5] }}</td>
+          <td>{{ record[6] }}</td>
+          <td>{{ record[7] }}</td>
+          <td><img src="{{record[8]}}" width="120" height="90" /></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>
