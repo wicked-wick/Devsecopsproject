@@ -6,6 +6,7 @@ pipeline {
 
        stage('Checkout Project'){
            steps {
+		   script{
 		   if (fileExists('Devsecopsproject')) {
 			   sh ' cd Devsecopsproject && git pull '
 		   }
@@ -19,6 +20,7 @@ pipeline {
                    '''
 		   }
 	   }
+	   }	   
        }
      }
 }
