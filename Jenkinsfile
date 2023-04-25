@@ -8,17 +8,24 @@ pipeline {
            steps {
 		   script{
 		   if (fileExists('Devsecopsproject')) {
-			   sh ' cd Devsecopsproject && git pull '
+			   
+			   sh ''' echo 'pulling files..'
+			          cd Devsecopsproject && git pull 
+			   '''
 		   }
 		   else {
 			   
                   sh  '''
                           echo 'Donwloading files...'
-                          git clone 'https://github.com/wicked-wick/Devsecopsproject.git'
-			  sudo apt-get install python3-pip
-                          pip3 install -r requirements.txt
+                          git clone 'https://github.com/wicked-wick/Devsecopsproject.git
                    '''
 		   }
+			   sh ''' 
+			   echo 'installing pip'
+			   sudo apt-get install python3-pip
+			   cd Devsecopsproject
+			   pip3 install -r requirements.txt
+			   '''
 	   }
 	   }	   
        }
