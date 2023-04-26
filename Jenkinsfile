@@ -5,6 +5,9 @@ pipeline {
      stages {
 
        stage('Checkout Project'){
+	          when { 
+			   expression { !fileExists('/Devsecopsproject/requirements.txt') }
+		   }
            steps {
 		   script{
 		   if (fileExists('Devsecopsproject')) {
@@ -16,7 +19,7 @@ pipeline {
 		   else {
 			   
                   sh  '''
-                          echo 'Donwloading files...'
+                          echo 'Downloading files...'
                           git clone 'https://github.com/wicked-wick/Devsecopsproject.git
                    '''
 		   }
@@ -25,6 +28,7 @@ pipeline {
 			   sudo apt-get -y install python3-pip
 			   cd Devsecopsproject
 			   pip3 install -r requirements.txt
+			   echo "Build Ready" > BUILD_STATUS
 			   '''
 	   }
 	   }	   
