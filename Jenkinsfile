@@ -6,7 +6,7 @@ pipeline {
 
        stage('Checkout Project'){
 	          when { 
-			   expression { !fileExists('/var/lib/jenkins/workspace/Devsecops project/Devsecopsproject/requirements.txt') }
+			   expression { !fileExists('/var/lib/jenkins/workspace/Devsecops project/Devsecopsproject/BUILD_STATUS') }
 		   }
            steps {
 		   script{
