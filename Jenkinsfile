@@ -35,7 +35,12 @@ pipeline {
        }
 	     stage ('Check-Git-secrets') {
 		     steps {
-		     sh 'trufflehog --json https://github.com/wicked-wick/Devsecopsproject.git > trufflehog'
+		     sh '''
+		     rm trufflehog || true
+		     echo 'Checking Git Secrets....'
+		     trufflehog --json https://github.com/wicked-wick/Devsecopsproject.git > trufflehog
+		     cat trufflehog
+		     '''
 		     }
 	     }
      }
