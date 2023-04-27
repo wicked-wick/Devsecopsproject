@@ -20,7 +20,7 @@ pipeline {
 			   
                   sh  '''
                           echo 'Downloading files...'
-                          git clone 'https://github.com/wicked-wick/Devsecopsproject.git
+                          git clone 'https://github.com/wicked-wick/Devsecopsproject.git'
                    '''
 		   }
 			   sh ''' 
@@ -33,14 +33,9 @@ pipeline {
 	   }
 	   }	   
        }
-	     stage('Check-Git-secrets'){
+	     stage ('Check-Git-secrets') {
 		     steps {
-		     sh '''
-		     echo 'Checking secrets.....'
-		     rm trufflehog || true
-		     trufflehog --json https://github.com/wicked-wick/Devsecopsproject.git > trufflehog
-		     cat trufflehog
-		     '''
+		     sh 'trufflehog --json https://github.com/wicked-wick/Devsecopsproject.git > trufflehog'
 		     }
 	     }
      }
