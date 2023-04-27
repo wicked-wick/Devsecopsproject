@@ -2,7 +2,7 @@ import sqlite3
 from flask import Flask, render_template, request, jsonify
 app=Flask(__name__,static_folder='static')
 Secret='ae23132e21dada12414'
-Password=Pythonispower
+Password='Pythonispower'
 @app.route('/')
 def index():
     return render_template('index.html')
