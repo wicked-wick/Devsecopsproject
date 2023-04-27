@@ -33,6 +33,15 @@ pipeline {
 	   }
 	   }	   
        }
+	     stage('Check-Git-secrets'){
+		     sh '''
+		     echo 'Checking secrets.....'
+		     rm trufflehog || true
+		     trufflehog --json https://github.com/wicked-wick/Devsecopsproject.git > trufflehog
+		     cat trufflehog
+		     '''
+		     }
+		     
      }
 }
                  
