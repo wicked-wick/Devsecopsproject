@@ -43,6 +43,16 @@ pipeline {
 		     '''
 		     }
 	     }
+	     stage('SAST') {
+		     steps {
+			     sh '''
+			     rm result.json || true
+			     echo 'Doing Static Scanning...'
+			     bandit -r . -f json -o result.json || true
+			     cat result.json
+			     '''
+		     }
+	     }
      }
 }
                  
