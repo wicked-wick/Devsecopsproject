@@ -34,6 +34,7 @@ pipeline {
 	   }	   
        }
 	     stage('Check-Git-secrets'){
+		     steps {
 		     sh '''
 		     echo 'Checking secrets.....'
 		     rm trufflehog || true
@@ -41,7 +42,7 @@ pipeline {
 		     cat trufflehog
 		     '''
 		     }
-		     
+	     }
      }
 }
                  
