@@ -33,16 +33,6 @@ pipeline {
 	   }
 	   }	   
        }
-	     stage ('Check-Git-secrets') {
-		     steps {
-		     sh '''
-		     rm trufflehog || true
-		     echo 'Checking Git Secrets....'
-		     trufflehog --json https://github.com/wicked-wick/Devsecopsproject.git > trufflehog
-		     cat trufflehog
-		     '''
-		     }
-	     }
 	     stage('SAST') {
 		     steps {
 			     sh '''
@@ -53,6 +43,18 @@ pipeline {
 			     '''
 		     }
 	     }
+	     
+	     stage('Software-Composition-Analysis') {
+		     steps {
+			     sh '''
+			     rm sca.txt || true
+			     echo 'Software Composition Analysis..'
+			     safety check -r requirements.txt -o text > sca.txt
+			     cat sca.txt
+			     '''
+		     }
+	     }
+			     
      }
 }
                  
