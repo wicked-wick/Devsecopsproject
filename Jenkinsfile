@@ -5,9 +5,6 @@ pipeline {
      stages {
 
        stage('Checkout Project'){
-	          when { 
-			   expression { !fileExists('/var/lib/jenkins/workspace/Devsecops project/Devsecopsproject/BUILD_STATUS') }
-		   }
            steps {
 		   script{
 		   if (fileExists('Devsecopsproject')) {
@@ -24,6 +21,7 @@ pipeline {
                    '''
 		   }
 			   sh ''' 
+			   rm BUILD_STATUS
 			   echo 'installing pip'
 			   sudo apt-get -y install python3-pip
 			   cd Devsecopsproject
