@@ -1,5 +1,5 @@
 import sqlite3
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, abort, render_template_string
 app=Flask(__name__,static_folder='static')
 @app.route('/')
 def index():
@@ -13,6 +13,12 @@ def search():
     records=cur.fetchall()
     conn.close()
     return render_template('results.html',records=records,search_term=search_term)
-
+@app.route('/files')
+def files():
+    term=request.args.get('get')
+    if not term:
+        abort(400,'Parameter get not found in the url')
+    template=f'''<div><h1>Hello</h1>{term}</div>'''
+    return render_template_string(template)
 if __name__=='__main__':
     app.run(debug=True)
