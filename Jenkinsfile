@@ -33,12 +33,18 @@ pipeline {
        }
 	     stage('SAST') {
 		     steps {
-			     sh '''
-			     rm result.json || true
-			     echo 'Doing Static Scanning...'
-			     bandit -r . -f json -o result.json || true
-			     cat result.json
-			     '''
+			     sh 'rm result.json || true'
+			      script {
+      sh '''echo "Doing static Scanning			      
+         bandit -r . -f txt -o result.txt'''
+      if (sh(script: 'echo $?', returnStdout: true).trim() == '0') {
+         echo "No security issues found by Bandit."
+      } else {
+         echo "Bandit security issues found. Pipeline failed."
+         cat result.txt
+         error "Bandit found security issues. Pipeline failed."
+      }
+			      }
 		     }
 	     }
 	     
