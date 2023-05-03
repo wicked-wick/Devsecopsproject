@@ -39,6 +39,7 @@ pipeline {
       if (banditExitCode == 0) {
         echo 'No security issues found.'
       } else {
+	cat result.txt
         error('Security issues found. Please fix before continuing.')
       }
     }
