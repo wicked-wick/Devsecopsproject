@@ -35,18 +35,13 @@ pipeline {
 		     steps {
 			     sh 'rm result.txt || true'
 			      script {
-      sh '''echo "Doing static Scanning"			      
-         bandit -r . -f txt -o result.txt'''
-      if (sh(script: 'echo $?', returnStdout: true).trim() == '0') {
-        sh 'echo "No security issues found by Bandit."'
+      def banditExitCode = sh(returnStatus: true, script: 'bandit -r . -f txt -o result.txt')
+      if (banditExitCode == 0) {
+        echo 'No security issues found.'
       } else {
-         sh '''
-	 echo "Bandit security issues found. Pipeline failed."
-         cat result.txt
-	 '''
-         error "Bandit found security issues. Pipeline failed."
+        error('Security issues found. Please fix before continuing.')
       }
-			      }
+    }
 		     }
 	     }
 	     
