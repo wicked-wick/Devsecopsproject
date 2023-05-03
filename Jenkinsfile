@@ -38,7 +38,7 @@ pipeline {
       sh '''echo "Doing static Scanning"			      
          bandit -r . -f txt -o result.txt'''
       if (sh(script: 'echo $?', returnStdout: true).trim() == '0') {
-        sh 'echo "No security issues found by Bandit."
+        sh 'echo "No security issues found by Bandit."'
       } else {
          sh '''
 	 echo "Bandit security issues found. Pipeline failed."
