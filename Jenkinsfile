@@ -33,7 +33,7 @@ pipeline {
        }
 	     stage('SAST') {
 		     steps {
-			     sh 'rm result.json || true'
+			     sh 'rm result.txt || true'
 			      script {
       sh '''echo "Doing static Scanning"			      
          bandit -r . -f txt -o result.txt'''
