@@ -35,7 +35,7 @@ pipeline {
 		     steps {
 			     sh 'rm result.json || true'
 			      script {
-      sh '''echo "Doing static Scanning			      
+      sh '''echo "Doing static Scanning"			      
          bandit -r . -f txt -o result.txt'''
       if (sh(script: 'echo $?', returnStdout: true).trim() == '0') {
          echo "No security issues found by Bandit."
