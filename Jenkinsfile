@@ -21,7 +21,7 @@ pipeline {
                    '''
 		   }
 			   sh ''' 
-			   rm /../BUILD_STATUS || true
+			   rm /Devsecopsproject/BUILD_STATUS || true
 			   echo 'installing pip'
 			   sudo apt-get -y install python3-pip
 			   cd Devsecopsproject
