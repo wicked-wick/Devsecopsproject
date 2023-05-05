@@ -44,7 +44,7 @@ pipeline {
 	echo 'Updating the code and restarting the container'
 	      sshagent(['Docker']) {
 		       sh '''
-		       ssh -o StrictHostKeyChecking=no ubuntu@52.66.235.57 "ls"
+		       ssh -o StrictHostKeyChecking=no ubuntu@52.66.235.57 "sudo docker restart webapp"
 		       ssh -o StrictHostKeyChecking=no ubuntu@52.66.235.57 "sudo docker exec webapp sh -c 'git pull' "
 		       '''
 	      }
