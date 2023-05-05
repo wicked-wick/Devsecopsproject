@@ -39,8 +39,13 @@ pipeline {
       if (banditExitCode == 0) {
         echo 'No security issues found.'
       } else {
+	echo 'Security Issues found, need to update the code.'
 	sh 'cat result.txt'
-        error('Security issues found. Please fix before continuing.')
+	echo 'Updating the code and restarting the container'
+	      sshagent(['Docker']) {
+		      sh ' sudo docker exec --name=webapp sh -c "git pull" '
+		      sh ' sudo docker restart webapp '
+	      }
       }
     }
 		     }
@@ -56,7 +61,6 @@ pipeline {
 			     '''
 		     }
 	     }
-			     
-     }
 }
                  
+}
