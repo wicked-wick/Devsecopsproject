@@ -43,7 +43,7 @@ pipeline {
 	sh 'cat result.txt'
 	echo 'Updating the code and restarting the container'
 	      sshagent(['Docker']) {
-		      sh ' sudo docker exec --name=webapp sh -c "git pull" '
+		      sh ' sudo docker exec webapp sh -c "git pull" '
 		      sh ' sudo docker restart webapp '
 	      }
       }
