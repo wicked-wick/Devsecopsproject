@@ -44,8 +44,8 @@ pipeline {
 	echo 'Updating the code and restarting the container'
 	      sshagent(['Docker']) {
 		       sh '''
-		       ssh -o StrictHostKeyChecking=no ubuntu@52.66.235.57 "sudo docker restart webapp"
-		       ssh -o StrictHostKeyChecking=no ubuntu@52.66.235.57 "sudo docker exec webapp sh -c 'git pull' "
+		       ssh -o StrictHostKeyChecking=no ubuntu@52.66.235.57 "sudo docker start webapp && sudo docker exec webapp sh -c 'git pull' "
+		       ssh -o StrictHostKeyChecking=no ubuntu@52.66.235.57 "sudo docker restart webapp "
 		       '''
 	      }
       }
@@ -61,6 +61,28 @@ pipeline {
 			     safety check -r requirements.txt -o text > sca.txt
 			     cat sca.txt
 			     '''
+		     }
+	     }
+	     
+	     stage('Deployment') {
+		     steps {
+			     script {
+				     def status= sshagent(['Docker']) {
+					     sh '''
+					     ssh -o StrictHostKeyChecking=no ubuntu@52.66.235.57 "sudo docker ps --filter 'name=webapp' --format '{{.Names}}' "
+					     '''
+				     }
+				     if (status.trim()=='webapp') {
+					     echo ' Container is already running, skipping deployment '
+				     }
+				     else {
+					     sshagent(['Docker']){
+						     sh '''
+						     ssh -o StrictHostKeyChecking=no ubuntu@52.66.235.57 "sudo docker run -t -d -p 5000:80 --name webapp devsecops"
+						     '''
+					     }
+				     }
+			     }
 		     }
 	     }
 }
