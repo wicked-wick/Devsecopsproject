@@ -68,9 +68,9 @@ pipeline {
 		     steps {
 			     script {
 				     def status= sshagent(['Docker']) {
-					     sh '''
+					     sh """
 					     ssh -o StrictHostKeyChecking=no ubuntu@52.66.235.57 "sudo docker ps --filter 'name=webapp' --format {{.Names}} "
-					     '''
+					     """
 				     }
 				     if (status=='webapp') {
 					     echo ' Container is already running, skipping deployment '
@@ -80,7 +80,7 @@ pipeline {
 						     sh '''
 						     ssh -o StrictHostKeyChecking=no ubuntu@52.66.235.57 "sudo docker ps"
 						     '''
-						     echo '${status}'
+						     echo "${status}"
 					     }
 				     }
 			     }
