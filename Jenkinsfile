@@ -72,14 +72,15 @@ pipeline {
 					     ssh -o StrictHostKeyChecking=no ubuntu@52.66.235.57 "sudo docker ps --filter 'name=webapp' --format {{.Names}} "
 					     '''
 				     }
-				     if (status.trim()=='webapp') {
+				     if (status=='webapp') {
 					     echo ' Container is already running, skipping deployment '
 				     }
 				     else {
 					     sshagent(['Docker']){
 						     sh '''
-						     ssh -o StrictHostKeyChecking=no ubuntu@52.66.235.57 "sudo docker run -t -d -p 5000:80 --name webapp devsecops"
+						     ssh -o StrictHostKeyChecking=no ubuntu@52.66.235.57 "sudo docker ps"
 						     '''
+						     echo '${status}'
 					     }
 				     }
 			     }
