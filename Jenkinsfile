@@ -76,14 +76,23 @@ pipeline {
 				     else {
 					     sshagent(['Docker']){
 						     sh '''
-						     ssh -o StrictHostKeyChecking=no ubuntu@52.66.235.57 "sudo docker ps"
+						     ssh -o StrictHostKeyChecking=no ubuntu@52.66.235.57 "sudo docker run -t -d -p 5000:80 --name webapp devsecops"
 						     '''
-						     echo "${status}"
 					     }
 				     }
 			     }
 		     }
 	     }
+	     stage('DAST') {
+		     steps {
+			     sshagent(['Docker']){
+				     sh '''
+				     ssh -o StrictHostKeyChecking=no ubuntu@52.66.235.57 "sudo docker run -t owasp/zap2docker-stable zap-baseline.py -t http://52.66.235.57/"
+				     '''
+			     }
+		     }
+	     }
+
 }
                  
 }
