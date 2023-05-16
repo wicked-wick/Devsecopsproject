@@ -44,8 +44,8 @@ pipeline {
 	echo 'Updating the code and restarting the container'
 	      sshagent(['Docker']) {
 		       sh '''
-		       ssh -o StrictHostKeyChecking=no ubuntu@52.66.235.57 "sudo docker start webapp && sudo docker exec webapp sh -c 'git pull' "
-		       ssh -o StrictHostKeyChecking=no ubuntu@52.66.235.57 "sudo docker restart webapp "
+		       ssh -o StrictHostKeyChecking=no ubuntu@3.108.220.221 "sudo docker start webapp && sudo docker exec webapp sh -c 'git pull' "
+		       ssh -o StrictHostKeyChecking=no ubuntu@3.108.220.221 "sudo docker restart webapp "
 		       '''
 	      }
       }
@@ -68,7 +68,7 @@ pipeline {
 		     steps {
 			     script {
 				     def status= sshagent(['Docker']) {
-		     sh(script: "ssh -o StrictHostKeyChecking=no ubuntu@52.66.235.57 'sudo docker ps --filter name=webapp --format {{.Names}}'", returnStdout: true)
+		     sh(script: "ssh -o StrictHostKeyChecking=no ubuntu@3.108.220.221 'sudo docker ps --filter name=webapp --format {{.Names}}'", returnStdout: true)
 				  }
 				     if (status.trim() == 'webapp') {
 					     echo ' Container is already running, skipping deployment '
@@ -76,7 +76,7 @@ pipeline {
 				     else {
 					     sshagent(['Docker']){
 						     sh '''
-						     ssh -o StrictHostKeyChecking=no ubuntu@52.66.235.57 "sudo docker run -t -d -p 5000:80 --name webapp devsecops"
+						     ssh -o StrictHostKeyChecking=no ubuntu@3.108.220.221 "sudo docker run -t -d -p 5000:80 --name webapp devsecops"
 						     '''
 					     }
 				     }
@@ -87,7 +87,7 @@ pipeline {
 		     steps {
 			     sshagent(['Docker']){
 				     
-				   sh 'ssh -o StrictHostKeyChecking=no ubuntu@52.66.235.57 "sudo docker run -t owasp/zap2docker-stable zap-baseline.py -t http://52.66.235.57/" || true '
+				   sh 'ssh -o StrictHostKeyChecking=no ubuntu@3.108.220.221 "sudo docker run -t owasp/zap2docker-stable zap-baseline.py -t http://3.108.220.221/" || true '
 				   
 			     }
 		     }
