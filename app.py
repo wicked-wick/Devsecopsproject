@@ -13,12 +13,5 @@ def search():
     records=cur.fetchall()
     conn.close()
     return render_template('results.html',records=records,search_term=search_term)
-@app.route('/files')
-def files():
-    term=request.args.get('get')
-    if not term:
-        abort(400,'Parameter get not found in the url')
-    template=f'''<div><h1>Hello</h1>{term}</div>'''
-    return render_template_string(template)
 if __name__=='__main__':
     app.run(debug=False)
