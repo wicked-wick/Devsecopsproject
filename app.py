@@ -1,5 +1,5 @@
 import sqlite3
-from flask import Flask, render_template, request, jsonify, abort, render_template_string
+from flask import Flask, render_template, request, jsonify, abort
 app=Flask(__name__,static_folder='static')
 @app.route('/')
 def index():
