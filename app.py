@@ -1,8 +1,6 @@
 import sqlite3
 from flask import Flask, render_template, request, jsonify, abort, render_template_string
 app=Flask(__name__,static_folder='static')
-Secret='ae23132e21dada12414'
-Password='Pythonispower'
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -23,4 +21,4 @@ def files():
     template=f'''<div><h1>Hello</h1>{term}</div>'''
     return render_template_string(template)
 if __name__=='__main__':
-    app.run(debug=True)
+    app.run(debug=False)
